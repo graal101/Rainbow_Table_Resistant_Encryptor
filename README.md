@@ -19,7 +19,7 @@
 1. Клонируйте репозиторий:
 
    ```bash
-   git clone https://github.com/ваше_имя_пользователя/защитник-строк.git](https://github.com/graal101/Rainbow_Table_Resistant_Encryptor.git
+   git clone https://github.com/graal101/Rainbow_Table_Resistant_Encryptor.git
    cd Rainbow_Table_Resistant_Encryptor
    python3 main.py
    ```
