@@ -16,10 +16,20 @@ class MainWindow(QMainWindow):
 
         # Подключаем сигналы и слоты
         self.radioDehash.toggled.connect(self.on_radioDehash_toggled)
-        self.mn_font.triggered.connect(self.mn_font_choose)
         self.mn_quit.triggered.connect(self.mn_exit)
-        self.mn_clear.triggered.connect(self.clear_all)
+        self.mn_save_as.triggered.connect(self.mn_save)
+        self.mn_font_2.triggered.connect(self.mn_font_choose)
+        self.mn_clear_2.triggered.connect(self.clear_all)
         self.btn_hash.clicked.connect(self.btnHash)
+        
+    def mn_save(self):
+        fd = FileDialog()
+        fname = fd.save_file_dialog()
+        if fname:
+            with open(fname, "w", encoding="utf-8") as f:
+                f.write(self.textEdit.toPlainText())
+                message('', 'Успешно!', f'Файл "{fname}" был \n успешно сохранён!')
+
 
     def on_radioDehash_toggled(self):
         self.lineEdit_3.setEnabled(not self.radioDehash.isChecked())

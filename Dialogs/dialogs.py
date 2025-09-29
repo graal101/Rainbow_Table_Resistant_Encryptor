@@ -19,6 +19,7 @@ class FileDialog(QWidget):
     def __init__(self):
         super().__init__()
         self.filter_dialog = 'All Files (*.*);;SQLite db Files (*.db);;SQLite Files (*.sqlite3)'
+        self.save_filter_dialog = 'TXT файлы (*.txt);;Все файлы (*.*)'
 
     def open_file_dialog(self):
         """Диалог открытия файла."""
@@ -38,7 +39,7 @@ class FileDialog(QWidget):
         options = QFileDialog.Option.DontUseNativeDialog
         file_dialog = QFileDialog(self)
         file_dialog.setOptions(options)
-        file_dialog.setNameFilter(self.filter_dialog)
+        file_dialog.setNameFilter(self.save_filter_dialog)
         file_dialog.setAcceptMode(QFileDialog.AcceptMode.AcceptSave)
 
         if file_dialog.exec():

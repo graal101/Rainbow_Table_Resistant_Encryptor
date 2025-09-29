@@ -131,13 +131,20 @@
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>Управление</string>
+     <string>Файл</string>
     </property>
-    <addaction name="mn_font"/>
-    <addaction name="mn_clear"/>
+    <addaction name="mn_save_as"/>
     <addaction name="mn_quit"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Настройки</string>
+    </property>
+    <addaction name="mn_clear_2"/>
+    <addaction name="mn_font_2"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="mn_font">
@@ -153,6 +160,21 @@
   <action name="mn_clear">
    <property name="text">
     <string>Очистить всё.</string>
+   </property>
+  </action>
+  <action name="mn_clear_2">
+   <property name="text">
+    <string>Очистить</string>
+   </property>
+  </action>
+  <action name="mn_font_2">
+   <property name="text">
+    <string>Выбор шрифта</string>
+   </property>
+  </action>
+  <action name="mn_save_as">
+   <property name="text">
+    <string>Сохранить как..</string>
    </property>
   </action>
  </widget>
