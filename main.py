@@ -4,7 +4,7 @@
 #  main.py
 import sys
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
 from Dialogs.dialogs import message, FileDialog
 import tools.crypt as crp
 
@@ -16,13 +16,26 @@ class MainWindow(QMainWindow):
 
         # Подключаем сигналы и слоты
         self.radioDehash.toggled.connect(self.on_radioDehash_toggled)
+        self.check_visible.toggled.connect(self.on_check_visible_toggled)
         self.mn_quit.triggered.connect(self.mn_exit)
         self.mn_save_as.triggered.connect(self.mn_save)
         self.mn_font_2.triggered.connect(self.mn_font_choose)
         self.mn_clear_2.triggered.connect(self.clear_all)
         self.btn_hash.clicked.connect(self.btnHash)
-        
+
+
+    def on_check_visible_toggled(self):
+        """Видимость вводимого пароля."""
+        if not self.check_visible.isChecked():
+            self.lineEdit_2.setEchoMode(QLineEdit.EchoMode.Password)
+            self.lineEdit_3.setEchoMode(QLineEdit.EchoMode.Password)
+        else:
+            self.lineEdit_2.setEchoMode(QLineEdit.EchoMode.Normal)
+            self.lineEdit_3.setEchoMode(QLineEdit.EchoMode.Normal)
+
+
     def mn_save(self):
+        """Сохранить текст из textEdit в файл."""
         fd = FileDialog()
         fname = fd.save_file_dialog()
         if fname:
@@ -48,6 +61,7 @@ class MainWindow(QMainWindow):
 
         
     def clear_all(self):
+        """Очистка полей ввода/вывода."""
         self.lineEdit.clear()
         self.lineEdit_2.clear()
         self.lineEdit_3.clear()
@@ -55,10 +69,10 @@ class MainWindow(QMainWindow):
 
 
     def btnHash(self):
+        """Кнопка шифрования/дешифрования."""
         if not self.lineEdit.text() and not self.lineEdit_2.text():
             message('', 'Строка/Пароль..', 'Не заполнено поле для шифрования \n или поле пароля!..')
             return
-        # Пока криптуем.
         str_str = self.lineEdit.text()
         pas_str = self.lineEdit_2.text()
         if self.radioHash.isChecked():
