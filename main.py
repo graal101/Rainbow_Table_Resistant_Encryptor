@@ -23,7 +23,6 @@ class MainWindow(QMainWindow):
         self.mn_clear_2.triggered.connect(self.clear_all)
         self.btn_hash.clicked.connect(self.btnHash)
 
-
     def on_check_visible_toggled(self):
         """Видимость вводимого пароля."""
         if not self.check_visible.isChecked():
@@ -33,20 +32,18 @@ class MainWindow(QMainWindow):
             self.lineEdit_2.setEchoMode(QLineEdit.EchoMode.Normal)
             self.lineEdit_3.setEchoMode(QLineEdit.EchoMode.Normal)
 
-
     def mn_save(self):
         """Сохранить текст из textEdit в файл."""
         fd = FileDialog()
         fname = fd.save_file_dialog()
         if fname:
-            with open(fname, "w", encoding="utf-8") as f:
+            with open(fname, 'w', encoding='utf-8') as f:
                 f.write(self.textEdit.toPlainText())
                 message('', 'Успешно!', f'Файл "{fname}" был \n успешно сохранён!')
 
-
     def on_radioDehash_toggled(self):
         self.lineEdit_3.setEnabled(not self.radioDehash.isChecked())
-        
+
     def mn_font_choose(self):
         font_open = FileDialog()
         fsize = font_open.font_dialog()
@@ -55,18 +52,16 @@ class MainWindow(QMainWindow):
             self.lineEdit_2.setFont(fsize)
             self.lineEdit_3.setFont(fsize)
             self.textEdit.setFont(fsize)
-            
+
     def mn_exit(self):
         sys.exit()
 
-        
     def clear_all(self):
         """Очистка полей ввода/вывода."""
         self.lineEdit.clear()
         self.lineEdit_2.clear()
         self.lineEdit_3.clear()
         self.textEdit.clear()
-
 
     def btnHash(self):
         """Кнопка шифрования/дешифрования."""
@@ -83,11 +78,10 @@ class MainWindow(QMainWindow):
                 return
         if self.radioDehash.isChecked():
             self.textEdit.append(crp.decrypt_string(pas_str, str_str))
-        
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
-    
