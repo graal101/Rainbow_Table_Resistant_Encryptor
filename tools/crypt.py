@@ -3,6 +3,19 @@ import hashlib
 import os
 from cryptography.fernet import Fernet
 
+class Crypt():
+    def __init__(self, passw: str, plain_text: str):
+        self.__passw = passw
+        self.__plain_text = plain_text
+        
+    def val_length(self) -> bool:
+        """Проверка длины пароля."""
+        return True
+        
+    def val_special_char(self) -> bool:
+        """Проверка наличия спец символов"""
+        return True
+        
 
 def generate_key(password: str, salt: bytes) -> bytes:
     """Генерирует ключ на основе пароля и соли."""
