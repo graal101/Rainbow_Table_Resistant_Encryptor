@@ -1,19 +1,28 @@
 import base64
 import hashlib
 import os
+import re
 from cryptography.fernet import Fernet
 
 class Crypt():
-    def __init__(self, passw: str, plain_text: str):
+    def __init__(self, passw: str, plain_text: str, Nchar: int = 14):
         self.__passw = passw
         self.__plain_text = plain_text
+        self.__Nchar = Nchar
         
     def val_length(self) -> bool:
         """Проверка длины пароля."""
+        print(self.__Nchar)
+        if len(self.__passw) < self.__Nchar:
+            return False
         return True
         
     def val_special_char(self) -> bool:
         """Проверка наличия спец символов"""
+        # Регулярное выражение для спецсимволов
+        has_special_char = re.compile(r'[!_@#$%^&*(),.?":{}|<>]')
+        if not has_special_char.search(self.__passw):
+            return False
         return True
         
 

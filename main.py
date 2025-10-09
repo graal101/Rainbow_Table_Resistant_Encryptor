@@ -6,7 +6,10 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
 from Dialogs.dialogs import message, FileDialog
+from tools.crypt import Crypt as cry
+
 import tools.crypt as crp
+
 
 
 class MainWindow(QMainWindow):
@@ -65,6 +68,7 @@ class MainWindow(QMainWindow):
 
     def btnHash(self):
         """Кнопка шифрования/дешифрования."""
+        N = 16
         if not self.lineEdit.text() and not self.lineEdit_2.text():
             message('', 'Строка/Пароль..', 'Не заполнено поле для шифрования \n или поле пароля!..')
             return
@@ -72,6 +76,10 @@ class MainWindow(QMainWindow):
         pas_str = self.lineEdit_2.text()
         if self.radioHash.isChecked():
             if pas_str == self.lineEdit_3.text():
+                valids = cry(pas_str, str_str, N)
+                if (valids.val_length() == False) or (valids.val_special_char() == False):
+                    message('', 'Ввод пароля', f'Отсутствуют спецсимволы или длина пароля меньше < {N}!')
+                    return
                 self.textEdit.append(crp.encrypt_string(pas_str, str_str))
             else:
                 message('', 'Ошибка шифрования', 'Не указано подтверждение пароля!')
