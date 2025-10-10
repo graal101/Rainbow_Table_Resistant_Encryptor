@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
 
     def btnHash(self):
         """Кнопка шифрования/дешифрования."""
-        N = 16
+        N = 3
         if not self.lineEdit.text() and not self.lineEdit_2.text():
             message('', 'Строка/Пароль..', 'Не заполнено поле для шифрования \n или поле пароля!..')
             return
@@ -80,12 +80,13 @@ class MainWindow(QMainWindow):
                 if (valids.val_length() == False) or (valids.val_special_char() == False):
                     message('', 'Ввод пароля', f'Отсутствуют спецсимволы или длина пароля меньше < {N}!')
                     return
-                self.textEdit.append(crp.encrypt_string(pas_str, str_str))
+                self.textEdit.append(valids.encrypt_string())
             else:
                 message('', 'Ошибка шифрования', 'Не указано подтверждение пароля!')
                 return
         if self.radioDehash.isChecked():
-            self.textEdit.append(crp.decrypt_string(pas_str, str_str))
+            valids = cry(pas_str, str_str, N)
+            self.textEdit.append(valids.decrypt_string())
 
 
 if __name__ == '__main__':
