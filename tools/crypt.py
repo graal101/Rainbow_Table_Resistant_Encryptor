@@ -2,35 +2,38 @@ import base64
 import hashlib
 import os
 import re
+
 from cryptography.fernet import Fernet
 
+
 class Crypt():
-    def __init__(self, passw: str, plain_text: str, Nchar: int = 14):
+    """Класс для криптования/дукриптования строки."""
+    def __init__(self, passw: str, plain_text: str, nchar: int = 14):
         self.__passw = passw
         self.__plain_text = plain_text
-        self.__Nchar = Nchar
-        
+        self.__nchar = nchar
+
     def val_length(self) -> bool:
         """Проверка длины пароля."""
-        if len(self.__passw) < self.__Nchar:
+        if len(self.__passw) < self.__nchar:
             return False
         return True
-        
+
     def val_special_char(self) -> bool:
-        """Проверка наличия спец символов"""
-        # Регулярное выражение для спецсимволов
-        has_special_char = re.compile(r'[!_@#$%^&*(),.?":{}|<>]')
+        """Проверка наличия спец символов."""
+        #  Регулярное выражение для спецсимволов
+        has_special_char = re.compile(r'[!_@#$%^&*(),.?":{}|=<>]')
         if not has_special_char.search(self.__passw):
             return False
         return True
-    
+
     def generate_key(self, password: str, salt: bytes) -> bytes:
         """Генерирует ключ на основе пароля и соли."""
         password_bytes = password.encode()
         # Генерируем ключ длиной 32 байта
         key = hashlib.pbkdf2_hmac('sha256', password_bytes, salt, 100000)
         return base64.urlsafe_b64encode(key)
-    
+
     def encrypt_string(self) -> str:
         """Шифрует строку с использованием пароля."""
         # Генерируем соль
@@ -40,7 +43,7 @@ class Crypt():
         encrypted = fernet.encrypt(self.__plain_text.encode())
         # Сохраняем соль и зашифрованные данные вместе
         return base64.urlsafe_b64encode(salt + b':' + encrypted).decode()
-    
+
     def decrypt_string(self) -> str:
         """Дешифрует строку с использованием пароля."""
         # Декодируем зашифрованные данные

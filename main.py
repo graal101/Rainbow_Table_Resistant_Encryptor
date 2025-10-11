@@ -4,12 +4,12 @@
 #  main.py
 import sys
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLineEdit
+
 from Dialogs.dialogs import message, FileDialog
-from tools.crypt import Crypt as cry
 
-import tools.crypt as crp
+from PyQt6.QtWidgets import QApplication, QLineEdit, QMainWindow 
 
+from tools.crypt import Crypt
 
 
 class MainWindow(QMainWindow):
@@ -74,10 +74,10 @@ class MainWindow(QMainWindow):
             return
         str_str = self.lineEdit.text()
         pas_str = self.lineEdit_2.text()
+        valids = Crypt(pas_str, str_str, N)
         if self.radioHash.isChecked():
             if pas_str == self.lineEdit_3.text():
-                valids = cry(pas_str, str_str, N)
-                if (valids.val_length() == False) or (valids.val_special_char() == False):
+                if (valids.val_length() is False) or (valids.val_special_char() is False):
                     message('', 'Ввод пароля', f'Отсутствуют спецсимволы или длина пароля меньше < {N}!')
                     return
                 self.textEdit.append(valids.encrypt_string())
@@ -85,7 +85,6 @@ class MainWindow(QMainWindow):
                 message('', 'Ошибка шифрования', 'Не указано подтверждение пароля!')
                 return
         if self.radioDehash.isChecked():
-            valids = cry(pas_str, str_str, N)
             self.textEdit.append(valids.decrypt_string())
 
 
